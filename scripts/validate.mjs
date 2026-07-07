@@ -120,6 +120,33 @@ function checkBookPack(slug) {
         }
       }
     }
+
+    // Chapter offsets must land on their headings in source.txt. Read raw —
+    // no newline normalization — so CRLF conversion or edits that shift the
+    // recorded char offsets fail loudly here instead of at runtime.
+    const sourcePath = path.join(packDir, 'source.txt');
+    if (!existsSync(sourcePath)) {
+      errors.push(`missing source.txt (required to verify chapter offsets)`);
+    } else {
+      const text = readFileSync(sourcePath, 'utf8');
+      for (const chapter of Array.isArray(chapters) ? chapters : []) {
+        const { number, title, start, end } = chapter;
+        if (
+          !Number.isInteger(start) || !Number.isInteger(end) ||
+          start < 0 || start >= end || end > text.length
+        ) {
+          errors.push(
+            `chapters.json: chapter ${number} offsets [${start}, ${end}) out of range (source.txt is ${text.length} chars)`,
+          );
+          continue;
+        }
+        if (title && !text.slice(start, Math.min(start + 300, end)).includes(title)) {
+          errors.push(
+            `chapters.json: chapter ${number} title ${JSON.stringify(title)} not found at offset ${start} — offsets have drifted (check line endings)`,
+          );
+        }
+      }
+    }
   }
 
   // 5. Character references must exist

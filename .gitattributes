@@ -1,0 +1,6 @@
+# Force LF in working copies regardless of core.autocrlf.
+# chapters.json stores char offsets into source.txt computed against LF text;
+# a CRLF checkout would shift every offset and break chapter lookups.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
