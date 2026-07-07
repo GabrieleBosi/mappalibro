@@ -212,3 +212,170 @@ body,
     transform: translateY(0);
   }
 }
+
+.hud-xp {
+  position: absolute;
+  top: 0.9rem;
+  right: 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #f4d97b;
+  background: rgba(10, 12, 18, 0.6);
+  border: 1px solid rgba(244, 217, 123, 0.35);
+  border-radius: 999px;
+  padding: 0.25em 0.8em;
+}
+
+.hud-prompt-flavor {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-style: italic;
+  opacity: 0.85;
+  white-space: normal;
+  max-width: min(24rem, calc(100vw - 2rem));
+}
+
+.hud-prompt {
+  text-align: center;
+}
+
+.panel-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 5, 9, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 20;
+}
+
+.panel {
+  background: #14171f;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 1.4rem;
+  width: 100%;
+  max-width: 26rem;
+  max-height: 82vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.panel-lead {
+  margin: 0 0 0.9rem;
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.panel-quote {
+  margin: 0 0 0.7rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.1rem;
+  line-height: 1.65;
+  border-left: 3px solid #f4d97b;
+  padding-left: 0.9rem;
+}
+
+.panel-source {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  text-align: right;
+}
+
+.panel-question {
+  margin: 0 0 0.9rem;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.quiz-option {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.7em 1em;
+  font: inherit;
+  font-size: 0.95rem;
+  color: inherit;
+  text-align: left;
+  background: #1d2129;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.quiz-option.correct {
+  border-color: #6fcf7c;
+  background: rgba(111, 207, 124, 0.16);
+}
+
+.quiz-option.wrong {
+  border-color: #e57373;
+  background: rgba(229, 115, 115, 0.14);
+}
+
+.panel-feedback {
+  margin: 0.8rem 0 0;
+  font-size: 0.9rem;
+}
+
+.panel-close {
+  display: block;
+  margin: 1.2rem 0 0 auto;
+  font: inherit;
+  font-size: 0.9rem;
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  padding: 0.4em 1.4em;
+  cursor: pointer;
+}
+
+/* Narrow phones: keep every panel and prompt readable at 380px. */
+@media (max-width: 480px) {
+  .hud-book {
+    max-width: 55vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.8rem;
+  }
+
+  .hud-banner {
+    bottom: 9.5rem;
+    padding: 0.75rem 0.9rem;
+  }
+
+  .hud-banner p {
+    font-size: 0.85rem;
+  }
+
+  .hud-prompt {
+    bottom: 11rem;
+    white-space: normal;
+    width: calc(100vw - 2rem);
+  }
+
+  .panel-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .panel {
+    max-width: none;
+    border-radius: 14px 14px 0 0;
+    border-bottom: none;
+    max-height: 72vh;
+    padding: 1.1rem 1.1rem 1.4rem;
+  }
+
+  .transition-narrative p {
+    font-size: 1.05rem;
+  }
+}

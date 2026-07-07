@@ -59,6 +59,12 @@ export function Player({ blueprint }: { blueprint: LocationBlueprint }) {
   useFrame((_, delta) => {
     const dt = Math.min(delta, 0.1);
 
+    // freeze (and discard) input while an interaction panel is open
+    if (useWorldStore.getState().activeInteraction) {
+      consumeLookDelta();
+      return;
+    }
+
     const look = consumeLookDelta();
     yaw.current -= look.x * LOOK_SENSITIVITY;
     pitch.current = Math.max(

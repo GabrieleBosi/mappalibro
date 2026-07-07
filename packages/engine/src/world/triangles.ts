@@ -24,6 +24,8 @@ const ENCLOSURE_TRIS: Record<EnclosureParams['kind'], number> = {
 
 /** Reserved headroom for portal archways added in the navigation layer. */
 const PORTAL_RESERVE = 8 * 40;
+/** Reserved headroom for interaction markers (pedestal + floating icon). */
+const INTERACTION_RESERVE = 8 * 44;
 
 function groundTris(ground: GroundParams): number {
   const plane = ground.segments * ground.segments * 2;
@@ -37,5 +39,5 @@ export function estimateTriangles(
 ): number {
   const props = bp.props.reduce((sum, p) => sum + TRIS_PER_KIND[p.kind], 0);
   const enclosure = bp.enclosure ? ENCLOSURE_TRIS[bp.enclosure.kind] : 0;
-  return groundTris(bp.ground) + props + enclosure + PORTAL_RESERVE;
+  return groundTris(bp.ground) + props + enclosure + PORTAL_RESERVE + INTERACTION_RESERVE;
 }

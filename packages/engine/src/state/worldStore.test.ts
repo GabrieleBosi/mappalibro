@@ -1,5 +1,6 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import treasureJson from '../../../../content/treasure-island/spec.json';
+import { progressKey } from './progress';
 import { useWorldStore } from './worldStore';
 
 function fetchStub(body: unknown, status = 200): typeof fetch {
@@ -22,6 +23,10 @@ function resetStore() {
     bannerLocationId: null,
     transition: { phase: 'idle', narrative: null, targetLocationId: null },
     nearbyPortal: null,
+    nearbyInteraction: null,
+    activeInteraction: null,
+    xp: 0,
+    completedInteractions: new Set<string>(),
     pointerLocked: false,
   });
 }
@@ -194,5 +199,141 @@ describe('worldStore transition machine', () => {
     s().beginTravel(portal);
     expect(s().nearbyPortal).toBeNull();
     expect(s().bannerLocationId).toBeNull();
+  });
+});
+
+describe('worldStore interactions and XP', () => {
+  const quotePlacement = {
+    interaction: {
+      id: 'benbow-quote-sea-song',
+      type: 'quote' as const,
+      prompt: 'Listen',
+      quote: { text: 'Fifteen men on the dead man’s chest', chapter: 1 },
+      xp: 10,
+    },
+    position: [3, 0, 2] as [number, number, number],
+    angle: 0,
+  };
+  const quizPlacement = {
+    interaction: {
+      id: 'benbow-quiz-one-legged-man',
+      type: 'quiz' as const,
+      quiz: { question: 'Who?', options: ['A', 'B'], answerIndex: 0 },
+      xp: 10,
+    },
+    position: [-3, 0, 2] as [number, number, number],
+    angle: Math.PI,
+  };
+
+  function stubbedStorage(initial: Record<string, string> = {}) {
+    const map = new Map(Object.entries(initial));
+    const storage = {
+      getItem: (k: string) => map.get(k) ?? null,
+      setItem: (k: string, v: string) => void map.set(k, v),
+      removeItem: (k: string) => void map.delete(k),
+      clear: () => map.clear(),
+      key: () => null,
+      get length() {
+        return map.size;
+      },
+    };
+    vi.stubGlobal('localStorage', storage);
+    return map;
+  }
+
+  beforeEach(resetStore);
+  afterEach(() => vi.unstubAllGlobals());
+
+  async function load() {
+    await useWorldStore.getState().loadSpec('treasure-island', {
+      fetchFn: fetchStub(treasureJson),
+    });
+  }
+
+  it('opening a quote awards its XP once and opens the panel', async () => {
+    stubbedStorage();
+    await load();
+    const s = () => useWorldStore.getState();
+    s().openInteraction(quotePlacement);
+    expect(s().activeInteraction?.interaction.id).toBe('benbow-quote-sea-song');
+    expect(s().xp).toBe(10);
+    s().closeInteraction();
+    s().openInteraction(quotePlacement);
+    expect(s().xp).toBe(10); // no double award
+  });
+
+  it('opening a quiz does not award XP; a correct completion does, once', async () => {
+    stubbedStorage();
+    await load();
+    const s = () => useWorldStore.getState();
+    s().openInteraction(quizPlacement);
+    expect(s().xp).toBe(0);
+    s().completeInteraction(quizPlacement.interaction.id, quizPlacement.interaction.xp);
+    expect(s().xp).toBe(10);
+    s().completeInteraction(quizPlacement.interaction.id, quizPlacement.interaction.xp);
+    expect(s().xp).toBe(10);
+    expect(s().completedInteractions.has('benbow-quiz-one-legged-man')).toBe(true);
+  });
+
+  it('persists progress to localStorage and restores it on load', async () => {
+    const map = stubbedStorage();
+    await load();
+    useWorldStore.getState().openInteraction(quotePlacement);
+    const raw = map.get(progressKey('treasure-island'));
+    expect(raw).toBeTruthy();
+    expect(JSON.parse(raw ?? '{}')).toEqual({
+      xp: 10,
+      completed: ['benbow-quote-sea-song'],
+    });
+
+    // fresh session: progress comes back
+    resetStore();
+    await load();
+    const s = useWorldStore.getState();
+    expect(s.xp).toBe(10);
+    expect(s.completedInteractions.has('benbow-quote-sea-song')).toBe(true);
+  });
+
+  it('works without localStorage (node / private mode)', async () => {
+    await load();
+    const s = () => useWorldStore.getState();
+    expect(() => s().openInteraction(quotePlacement)).not.toThrow();
+    expect(s().xp).toBe(10);
+  });
+
+  it('ignores openInteraction while another panel or a transition is active', async () => {
+    stubbedStorage();
+    await load();
+    const s = () => useWorldStore.getState();
+    s().openInteraction(quotePlacement);
+    s().openInteraction(quizPlacement);
+    expect(s().activeInteraction?.interaction.id).toBe('benbow-quote-sea-song');
+    s().closeInteraction();
+    s().beginTravel({
+      targetLocationId: 'bristol-docks',
+      targetName: 'Bristol Docks',
+      narrative: null,
+      unlockedBy: null,
+      position: [0, 0, -6.5],
+      angle: -Math.PI / 2,
+    });
+    s().openInteraction(quizPlacement);
+    expect(s().activeInteraction).toBeNull();
+  });
+
+  it('blocks travel while an interaction panel is open', async () => {
+    stubbedStorage();
+    await load();
+    const s = () => useWorldStore.getState();
+    s().openInteraction(quotePlacement);
+    s().beginTravel({
+      targetLocationId: 'bristol-docks',
+      targetName: 'Bristol Docks',
+      narrative: null,
+      unlockedBy: null,
+      position: [0, 0, -6.5],
+      angle: -Math.PI / 2,
+    });
+    expect(s().transition.phase).toBe('idle');
   });
 });

@@ -1,7 +1,6 @@
 import { useFrame, useThree } from '@react-three/fiber';
 import { useRef } from 'react';
 import type { Mesh } from 'three';
-import { consumeInteract } from '../controls/input';
 import { useWorldStore } from '../state/worldStore';
 import type { Palette } from '../world/blueprint';
 import type { PortalPlacement } from '../world/portals';
@@ -69,18 +68,10 @@ export function Portals({
   const lastCheck = useRef(-Infinity);
 
   useFrame((state) => {
-    const store = useWorldStore.getState();
-
-    if (consumeInteract()) {
-      if (store.nearbyPortal && store.transition.phase === 'idle') {
-        store.beginTravel(store.nearbyPortal);
-        return;
-      }
-    }
-
     if (state.clock.elapsedTime - lastCheck.current < CHECK_INTERVAL) return;
     lastCheck.current = state.clock.elapsedTime;
-    if (store.transition.phase !== 'idle') return;
+    const store = useWorldStore.getState();
+    if (store.transition.phase !== 'idle' || store.activeInteraction) return;
 
     let nearest: PortalPlacement | null = null;
     let nearestDist = Infinity;

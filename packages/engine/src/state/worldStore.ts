@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import { SpecLoadError, fetchSpec } from '../loader/loadSpec';
 import type { Location, WorldSpec } from '../spec/worldSpec';
+import type { InteractionPlacement } from '../world/interactions';
 import type { PortalPlacement } from '../world/portals';
+import { loadProgress, saveProgress } from './progress';
 
 export type LoadStatus = 'idle' | 'loading' | 'ready' | 'error';
 
@@ -46,6 +48,13 @@ interface WorldState {
   transition: TransitionState;
   /** Portal the player is standing near, for the HUD prompt. */
   nearbyPortal: PortalPlacement | null;
+  /** Interaction marker the player is standing near, for the HUD prompt. */
+  nearbyInteraction: InteractionPlacement | null;
+  /** Interaction whose panel is currently open (freezes movement). */
+  activeInteraction: InteractionPlacement | null;
+  /** Learning progress, persisted per book to localStorage. */
+  xp: number;
+  completedInteractions: Set<string>;
   /** Desktop pointer-lock state, for the "click to look" hint. */
   pointerLocked: boolean;
 
@@ -56,6 +65,11 @@ interface WorldState {
   completeArrival(): void;
   finishTransition(): void;
   setNearbyPortal(portal: PortalPlacement | null): void;
+  setNearbyInteraction(placement: InteractionPlacement | null): void;
+  openInteraction(placement: InteractionPlacement): void;
+  closeInteraction(): void;
+  /** Award XP for an interaction, once ever (persisted). */
+  completeInteraction(id: string, xpGain: number): void;
   setPointerLocked(locked: boolean): void;
 }
 
@@ -70,6 +84,10 @@ export const useWorldStore = create<WorldState>()((set, get) => ({
   bannerLocationId: null,
   transition: IDLE_TRANSITION,
   nearbyPortal: null,
+  nearbyInteraction: null,
+  activeInteraction: null,
+  xp: 0,
+  completedInteractions: new Set<string>(),
   pointerLocked: false,
 
   async loadSpec(slug, options = {}) {
@@ -90,6 +108,7 @@ export const useWorldStore = create<WorldState>()((set, get) => ({
       const override = options.locationOverride;
       const startId =
         override && locationsById.has(override) ? override : spec.entryLocation;
+      const progress = loadProgress(spec.book.slug);
       set({
         status: 'ready',
         error: null,
@@ -99,6 +118,8 @@ export const useWorldStore = create<WorldState>()((set, get) => ({
         currentLocationId: startId,
         arrivalKey: 1,
         bannerLocationId: startId,
+        xp: progress.xp,
+        completedInteractions: new Set(progress.completed),
       });
     } catch (err) {
       if (err instanceof SpecLoadError) {
@@ -119,7 +140,7 @@ export const useWorldStore = create<WorldState>()((set, get) => ({
 
   beginTravel(portal) {
     const s = get();
-    if (s.status !== 'ready' || s.transition.phase !== 'idle') return;
+    if (s.status !== 'ready' || s.transition.phase !== 'idle' || s.activeInteraction) return;
     if (!s.locationsById.has(portal.targetLocationId)) return;
     set({
       transition: {
@@ -128,6 +149,7 @@ export const useWorldStore = create<WorldState>()((set, get) => ({
         targetLocationId: portal.targetLocationId,
       },
       nearbyPortal: null,
+      nearbyInteraction: null,
       bannerLocationId: null,
     });
   },
@@ -157,6 +179,35 @@ export const useWorldStore = create<WorldState>()((set, get) => ({
 
   setNearbyPortal(portal) {
     set({ nearbyPortal: portal });
+  },
+
+  setNearbyInteraction(placement) {
+    set({ nearbyInteraction: placement });
+  },
+
+  openInteraction(placement) {
+    const s = get();
+    if (s.status !== 'ready' || s.transition.phase !== 'idle' || s.activeInteraction) return;
+    set({ activeInteraction: placement, bannerLocationId: null });
+    // quotes and simple interactions are "collected" on viewing;
+    // quizzes award only via completeInteraction on a correct answer
+    if (placement.interaction.type !== 'quiz') {
+      get().completeInteraction(placement.interaction.id, placement.interaction.xp);
+    }
+  },
+
+  closeInteraction() {
+    set({ activeInteraction: null });
+  },
+
+  completeInteraction(id, xpGain) {
+    const s = get();
+    if (!s.spec || s.completedInteractions.has(id)) return;
+    const completedInteractions = new Set(s.completedInteractions);
+    completedInteractions.add(id);
+    const xp = s.xp + xpGain;
+    set({ completedInteractions, xp });
+    saveProgress(s.spec.book.slug, { xp, completed: [...completedInteractions] });
   },
 
   setPointerLocked(locked) {

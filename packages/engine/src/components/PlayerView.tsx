@@ -5,9 +5,13 @@ import { Joystick } from '../controls/Joystick';
 import { TouchLook } from '../controls/TouchLook';
 import { useWorldStore } from '../state/worldStore';
 import { generateBlueprint } from '../world/blueprint';
+import { computeInteractionPlacements } from '../world/interactions';
 import { computePortalPlacements } from '../world/portals';
 import { Hud } from '../ui/Hud';
+import { InteractionPanel } from '../ui/InteractionPanel';
 import { TransitionOverlay } from '../ui/TransitionOverlay';
+import { InteractDispatcher } from './InteractDispatcher';
+import { InteractionMarkers } from './InteractionMarkers';
 import { LocationScene } from './LocationScene';
 import { Player } from './Player';
 import { Portals } from './Portals';
@@ -30,6 +34,13 @@ export function PlayerView() {
         : [],
     [spec, location, blueprint],
   );
+  const interactions = useMemo(
+    () =>
+      location && blueprint
+        ? computeInteractionPlacements(location, blueprint.boundsRadius)
+        : [],
+    [location, blueprint],
+  );
 
   if (!spec || !location || !blueprint) return null;
 
@@ -41,7 +52,13 @@ export function PlayerView() {
       <Canvas camera={{ fov: 70, position: [0, 1.6, 0], near: 0.1, far: 600 }} dpr={[1, 2]}>
         <LocationScene key={sceneKey} blueprint={blueprint} />
         <Portals key={`portals-${sceneKey}`} placements={portals} palette={blueprint.palette} />
+        <InteractionMarkers
+          key={`interactions-${sceneKey}`}
+          placements={interactions}
+          palette={blueprint.palette}
+        />
         <Player key={`player-${sceneKey}`} blueprint={blueprint} />
+        <InteractDispatcher />
       </Canvas>
       {touch && (
         <>
@@ -50,6 +67,7 @@ export function PlayerView() {
         </>
       )}
       <Hud />
+      <InteractionPanel />
       <TransitionOverlay />
     </div>
   );
