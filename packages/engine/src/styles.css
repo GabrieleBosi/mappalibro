@@ -1,0 +1,85 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: #0c0e12;
+  color: #e8e6e0;
+  font-family: system-ui, sans-serif;
+}
+
+.player-view {
+  position: fixed;
+  inset: 0;
+}
+
+.player-view canvas {
+  display: block;
+  touch-action: none;
+}
+
+.center-message {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.center-message h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.center-message code {
+  background: #1d2129;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+.hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hud-book {
+  position: absolute;
+  top: 0.9rem;
+  left: 1.1rem;
+  font-size: 0.85rem;
+  opacity: 0.85;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.hud-banner {
+  position: absolute;
+  left: 50%;
+  bottom: 3.2rem;
+  transform: translateX(-50%);
+  max-width: min(34rem, calc(100vw - 2rem));
+  background: rgba(10, 12, 18, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 0.9rem 1.2rem;
+  pointer-events: auto;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+.hud-banner h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+}
+
+.hud-banner p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  opacity: 0.9;
+}
