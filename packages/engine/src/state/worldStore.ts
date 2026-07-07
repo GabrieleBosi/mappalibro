@@ -1,8 +1,22 @@
 import { create } from 'zustand';
 import { SpecLoadError, fetchSpec } from '../loader/loadSpec';
 import type { Location, WorldSpec } from '../spec/worldSpec';
+import type { PortalPlacement } from '../world/portals';
 
 export type LoadStatus = 'idle' | 'loading' | 'ready' | 'error';
+
+/**
+ * Travel state machine (timing is owned by TransitionOverlay, not the store):
+ * idle -> fading-out -> narrative -> fading-in -> idle
+ * The narrative phase is skipped when the path has no narrative text.
+ */
+export type TransitionPhase = 'idle' | 'fading-out' | 'narrative' | 'fading-in';
+
+export interface TransitionState {
+  phase: TransitionPhase;
+  narrative: string | null;
+  targetLocationId: string | null;
+}
 
 export interface LoadOptions {
   /** Debug/verification hook: start at this location instead of entryLocation. */
@@ -10,6 +24,12 @@ export interface LoadOptions {
   /** Injectable for tests. */
   fetchFn?: typeof fetch;
 }
+
+const IDLE_TRANSITION: TransitionState = {
+  phase: 'idle',
+  narrative: null,
+  targetLocationId: null,
+};
 
 interface WorldState {
   status: LoadStatus;
@@ -23,9 +43,20 @@ interface WorldState {
   arrivalKey: number;
   /** Location whose name/description is shown in the arrival banner. */
   bannerLocationId: string | null;
+  transition: TransitionState;
+  /** Portal the player is standing near, for the HUD prompt. */
+  nearbyPortal: PortalPlacement | null;
+  /** Desktop pointer-lock state, for the "click to look" hint. */
+  pointerLocked: boolean;
 
   loadSpec(slug: string, options?: LoadOptions): Promise<void>;
   dismissBanner(): void;
+  beginTravel(portal: PortalPlacement): void;
+  showNarrative(): void;
+  completeArrival(): void;
+  finishTransition(): void;
+  setNearbyPortal(portal: PortalPlacement | null): void;
+  setPointerLocked(locked: boolean): void;
 }
 
 export const useWorldStore = create<WorldState>()((set, get) => ({
@@ -37,6 +68,9 @@ export const useWorldStore = create<WorldState>()((set, get) => ({
   currentLocationId: null,
   arrivalKey: 0,
   bannerLocationId: null,
+  transition: IDLE_TRANSITION,
+  nearbyPortal: null,
+  pointerLocked: false,
 
   async loadSpec(slug, options = {}) {
     // Guard against StrictMode double-invoked effects.
@@ -81,5 +115,51 @@ export const useWorldStore = create<WorldState>()((set, get) => ({
 
   dismissBanner() {
     set({ bannerLocationId: null });
+  },
+
+  beginTravel(portal) {
+    const s = get();
+    if (s.status !== 'ready' || s.transition.phase !== 'idle') return;
+    if (!s.locationsById.has(portal.targetLocationId)) return;
+    set({
+      transition: {
+        phase: 'fading-out',
+        narrative: portal.narrative,
+        targetLocationId: portal.targetLocationId,
+      },
+      nearbyPortal: null,
+      bannerLocationId: null,
+    });
+  },
+
+  showNarrative() {
+    const s = get();
+    if (s.transition.phase !== 'fading-out') return;
+    set({ transition: { ...s.transition, phase: 'narrative' } });
+  },
+
+  completeArrival() {
+    const s = get();
+    const { phase, targetLocationId } = s.transition;
+    if ((phase !== 'narrative' && phase !== 'fading-out') || !targetLocationId) return;
+    set({
+      currentLocationId: targetLocationId,
+      arrivalKey: s.arrivalKey + 1,
+      bannerLocationId: targetLocationId,
+      transition: { ...s.transition, phase: 'fading-in' },
+    });
+  },
+
+  finishTransition() {
+    if (get().transition.phase !== 'fading-in') return;
+    set({ transition: IDLE_TRANSITION });
+  },
+
+  setNearbyPortal(portal) {
+    set({ nearbyPortal: portal });
+  },
+
+  setPointerLocked(locked) {
+    set({ pointerLocked: locked });
   },
 }));

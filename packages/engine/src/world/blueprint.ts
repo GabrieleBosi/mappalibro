@@ -37,6 +37,8 @@ export interface Palette {
   secondary: string;
   accent: string;
   emissive: string;
+  /** Portal glow — NOT dimmed by time of day, so travel points stay visible at night. */
+  portal: string;
 }
 
 export interface LightingParams {
@@ -131,6 +133,7 @@ function makePalette(env: Environment, rand: () => number): Palette {
     secondary: hslToHex(hue + 30, sat * 0.85, 0.38 * gl),
     accent: hslToHex(mood.accentHue, Math.min(1, sat * 1.5), 0.55 * gl),
     emissive: hslToHex(40, 0.9, 0.62),
+    portal: hslToHex(mood.accentHue, Math.min(1, sat * 1.6), 0.6),
   };
 }
 

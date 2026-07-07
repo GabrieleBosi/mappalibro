@@ -20,6 +20,9 @@ function resetStore() {
     currentLocationId: null,
     arrivalKey: 0,
     bannerLocationId: null,
+    transition: { phase: 'idle', narrative: null, targetLocationId: null },
+    nearbyPortal: null,
+    pointerLocked: false,
   });
 }
 
@@ -111,5 +114,85 @@ describe('worldStore.loadSpec', () => {
     });
     useWorldStore.getState().dismissBanner();
     expect(useWorldStore.getState().bannerLocationId).toBeNull();
+  });
+});
+
+describe('worldStore transition machine', () => {
+  const portal = {
+    targetLocationId: 'bristol-docks',
+    targetName: 'Bristol Docks',
+    narrative: 'Jim rides the mail coach through the night to Bristol.',
+    unlockedBy: null,
+    position: [0, 0, -16.5] as [number, number, number],
+    angle: -Math.PI / 2,
+  };
+
+  beforeEach(async () => {
+    resetStore();
+    await useWorldStore.getState().loadSpec('treasure-island', {
+      fetchFn: fetchStub(treasureJson),
+    });
+  });
+
+  it('runs the full travel sequence and arrives at the target', () => {
+    const s = () => useWorldStore.getState();
+    const startArrivalKey = s().arrivalKey;
+
+    s().beginTravel(portal);
+    expect(s().transition.phase).toBe('fading-out');
+    expect(s().transition.narrative).toBe(portal.narrative);
+    expect(s().currentLocationId).toBe('admiral-benbow-inn'); // not yet moved
+
+    s().showNarrative();
+    expect(s().transition.phase).toBe('narrative');
+
+    s().completeArrival();
+    expect(s().transition.phase).toBe('fading-in');
+    expect(s().currentLocationId).toBe('bristol-docks');
+    expect(s().arrivalKey).toBe(startArrivalKey + 1);
+    expect(s().bannerLocationId).toBe('bristol-docks');
+
+    s().finishTransition();
+    expect(s().transition.phase).toBe('idle');
+    expect(s().transition.targetLocationId).toBeNull();
+  });
+
+  it('skips the narrative phase when the path has none', () => {
+    const s = () => useWorldStore.getState();
+    s().beginTravel({ ...portal, narrative: null });
+    // overlay goes straight from fading-out to arrival
+    s().completeArrival();
+    expect(s().transition.phase).toBe('fading-in');
+    expect(s().currentLocationId).toBe('bristol-docks');
+  });
+
+  it('ignores beginTravel while a transition is in flight', () => {
+    const s = () => useWorldStore.getState();
+    s().beginTravel(portal);
+    s().beginTravel({ ...portal, targetLocationId: 'the-hispaniola' });
+    expect(s().transition.targetLocationId).toBe('bristol-docks');
+  });
+
+  it('ignores beginTravel toward an unknown location', () => {
+    const s = () => useWorldStore.getState();
+    s().beginTravel({ ...portal, targetLocationId: 'nowhere' });
+    expect(s().transition.phase).toBe('idle');
+  });
+
+  it('ignores out-of-order machine calls', () => {
+    const s = () => useWorldStore.getState();
+    s().showNarrative();
+    s().completeArrival();
+    s().finishTransition();
+    expect(s().transition.phase).toBe('idle');
+    expect(s().currentLocationId).toBe('admiral-benbow-inn');
+  });
+
+  it('clears the nearby portal and banner when travel begins', () => {
+    const s = () => useWorldStore.getState();
+    s().setNearbyPortal(portal);
+    s().beginTravel(portal);
+    expect(s().nearbyPortal).toBeNull();
+    expect(s().bannerLocationId).toBeNull();
   });
 });

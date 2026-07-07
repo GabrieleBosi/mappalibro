@@ -46,6 +46,8 @@ body,
   inset: 0;
   pointer-events: none;
   user-select: none;
+  /* above the joystick/touch-look surfaces so prompts stay tappable */
+  z-index: 4;
 }
 
 .hud-book {
@@ -82,4 +84,131 @@ body,
   font-size: 0.9rem;
   line-height: 1.45;
   opacity: 0.9;
+}
+
+.hud-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 1.4rem;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  opacity: 0.7;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+}
+
+.hud-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 8.5rem;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  font-size: 1rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+}
+
+.hud-prompt kbd {
+  background: #2a2f3a;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  padding: 0.05em 0.45em;
+  font-family: inherit;
+}
+
+.hud-prompt button {
+  font: inherit;
+  color: inherit;
+  background: rgba(20, 24, 34, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  padding: 0.65em 1.4em;
+  cursor: pointer;
+}
+
+.joystick {
+  position: absolute;
+  left: 1.4rem;
+  bottom: 1.6rem;
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  touch-action: none;
+  z-index: 3;
+}
+
+.joystick-knob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  margin: -26px 0 0 -26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  pointer-events: none;
+}
+
+.touch-look {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 55%;
+  touch-action: none;
+  z-index: 2;
+}
+
+.transition-overlay {
+  position: fixed;
+  inset: 0;
+  background: #05060a;
+  opacity: 0;
+  transition: opacity 450ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.transition-overlay.dark {
+  opacity: 1;
+}
+
+.transition-narrative {
+  max-width: min(30rem, calc(100vw - 3rem));
+  text-align: center;
+  animation: narrative-in 700ms ease both;
+}
+
+.transition-narrative p {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.2rem;
+  line-height: 1.65;
+  font-style: italic;
+  margin: 0 0 1.4rem;
+}
+
+.transition-narrative button {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  padding: 0.45em 1.6em;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+@keyframes narrative-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.6rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
