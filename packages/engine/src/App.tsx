@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import './styles.css';
 import { PlayerView } from './components/PlayerView';
+import { Library } from './ui/Library';
 import { useWorldStore } from './state/worldStore';
 
 export function App() {
@@ -17,14 +18,7 @@ export function App() {
   }, [bookSlug, locationOverride, loadSpec]);
 
   if (!bookSlug) {
-    return (
-      <main className="center-message">
-        <h1>Mappalibro</h1>
-        <p>
-          No book selected. Open with <code>?book=&lt;slug&gt;</code>.
-        </p>
-      </main>
-    );
+    return <Library />;
   }
 
   if (status === 'idle' || status === 'loading') {
