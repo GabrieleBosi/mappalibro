@@ -1,0 +1,567 @@
+{
+  "specVersion": "1.0",
+  "book": {
+    "slug": "alice-in-wonderland",
+    "title": "Alice's Adventures in Wonderland",
+    "author": "Lewis Carroll",
+    "language": "en",
+    "year": 1865,
+    "summary": "Bored on a riverbank, Alice follows a White Rabbit with a pocket watch down a rabbit-hole into Wonderland — a dream-country where bottles shrink her and cakes stretch her, a Cheshire Cat grins directions, a Hatter keeps an endless tea-party, and the Queen of Hearts plays croquet with flamingoes and orders heads off, until a nonsense trial wakes Alice on the bank again."
+  },
+  "provenance": {
+    "sourceUrl": "https://www.gutenberg.org/ebooks/11",
+    "license": "Public domain (US, published 1865); text from Project Gutenberg eBook #11 (Millennium Fulcrum Edition 3.0)",
+    "retrievedAt": "2026-07-07"
+  },
+  "entryLocation": "riverbank",
+  "locations": [
+    {
+      "id": "riverbank",
+      "name": "The Riverbank",
+      "description": "The drowsy bank where Alice sits by her sister on a hot afternoon, tired of a book with no pictures or conversations in it. A White Rabbit with pink eyes runs close by, takes a watch out of its waistcoat-pocket, and pops down a large rabbit-hole under the hedge. It is also where the dream ends, with dead leaves fluttering down onto her face.",
+      "chapterRefs": [1, 12],
+      "environment": {
+        "setting": "outdoor-land",
+        "mood": "serene",
+        "scale": "medium",
+        "era": "Victorian English countryside",
+        "timeOfDay": "day"
+      },
+      "characters": ["white-rabbit"],
+      "interactions": [
+        {
+          "id": "bank-quote-white-rabbit",
+          "type": "quote",
+          "prompt": "Doze in the grass",
+          "quote": {
+            "text": "So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.",
+            "chapter": 1
+          },
+          "xp": 10
+        },
+        {
+          "id": "bank-quiz-waistcoat-watch",
+          "type": "quiz",
+          "prompt": "A very remarkable rabbit",
+          "quiz": {
+            "question": "What does the White Rabbit take out of its waistcoat-pocket?",
+            "options": [
+              "A watch",
+              "A large fan",
+              "A pair of white kid gloves",
+              "A letter from the Queen"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 1
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "id": "hall-of-doors",
+      "name": "The Hall of Doors",
+      "description": "The long, low hall at the bottom of the rabbit-hole, lit by a row of lamps hanging from the roof, with locked doors all round. On a little three-legged table of solid glass lies a tiny golden key, and behind a low curtain a door about fifteen inches high opens onto the loveliest garden you ever saw. A bottle labelled 'DRINK ME' and a cake marked 'EAT ME' shut Alice up like a telescope and stretch her out again.",
+      "chapterRefs": [1, 2, 7],
+      "environment": {
+        "setting": "underground",
+        "mood": "mysterious",
+        "scale": "medium",
+        "era": "Victorian dream-world"
+      },
+      "characters": ["white-rabbit"],
+      "interactions": [
+        {
+          "id": "hall-quote-little-door",
+          "type": "quote",
+          "prompt": "Kneel at the little door",
+          "quote": {
+            "text": "Alice opened the door and found that it led into a small passage, not much larger than a rat-hole: she knelt down and looked along the passage into the loveliest garden you ever saw.",
+            "chapter": 1
+          },
+          "xp": 10
+        },
+        {
+          "id": "hall-quiz-golden-key",
+          "type": "quiz",
+          "prompt": "The glass table",
+          "quiz": {
+            "question": "What does Alice find on the little three-legged glass table?",
+            "options": [
+              "A tiny golden key",
+              "A jar of orange marmalade",
+              "A book of rules",
+              "A silver thimble"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 1
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "id": "pool-of-tears",
+      "name": "The Pool of Tears",
+      "description": "A pool of salt water four inches deep — the tears Alice wept when she was nine feet high — crowded with a Mouse, a Duck, a Dodo, a Lory, an Eaglet, and several other curious creatures. On the bank, the dripping party dries off with a Caucus-race in which everybody begins and leaves off running when they like, everybody wins, and all must have prizes.",
+      "chapterRefs": [2, 3],
+      "environment": {
+        "setting": "outdoor-water",
+        "mood": "mysterious",
+        "scale": "medium",
+        "era": "Victorian dream-world"
+      },
+      "characters": ["dodo"],
+      "interactions": [
+        {
+          "id": "pool-quote-own-tears",
+          "type": "quote",
+          "prompt": "Swim for the shore",
+          "quote": {
+            "text": "“I wish I hadn’t cried so much!” said Alice, as she swam about, trying to find her way out. “I shall be punished for it now, I suppose, by being drowned in my own tears! That _will_ be a queer thing, to be sure! However, everything is queer to-day.”",
+            "chapter": 2
+          },
+          "xp": 10
+        },
+        {
+          "id": "pool-quiz-caucus-prize",
+          "type": "quiz",
+          "prompt": "Prizes for everybody",
+          "quiz": {
+            "question": "What prize does the Dodo solemnly present to Alice after the Caucus-race?",
+            "options": [
+              "Her own thimble",
+              "A box of comfits",
+              "A white kid glove",
+              "A saucer of milk"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 3
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "id": "rabbits-house",
+      "name": "The White Rabbit's House",
+      "description": "The White Rabbit's neat little house, with 'W. RABBIT' engraved on a bright brass plate on the door. Sent upstairs for the Duchess's fan and gloves, Alice drinks from an unlabelled bottle and grows until one arm is out of the window and one foot is up the chimney, while outside the Rabbit musters Pat, Bill the Lizard, and a barrowful of pebbles against her.",
+      "chapterRefs": [4],
+      "environment": {
+        "setting": "indoor",
+        "mood": "tense",
+        "scale": "intimate",
+        "era": "Victorian cottage",
+        "timeOfDay": "day"
+      },
+      "characters": ["white-rabbit"],
+      "interactions": [
+        {
+          "id": "rabbit-house-quote-brass-plate",
+          "type": "quote",
+          "prompt": "Read the brass plate",
+          "quote": {
+            "text": "As she said this, she came upon a neat little house, on the door of which was a bright brass plate with the name “W. RABBIT,” engraved upon it.",
+            "chapter": 4
+          },
+          "xp": 10
+        },
+        {
+          "id": "rabbit-house-quiz-chimney",
+          "type": "quiz",
+          "prompt": "Listen at the chimney",
+          "quiz": {
+            "question": "Who is sent down the chimney to deal with the giant arm in the window?",
+            "options": [
+              "Bill, the Lizard",
+              "Pat, the gardener",
+              "The White Rabbit himself",
+              "A pair of guinea-pigs"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 4
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "id": "mushroom-wood",
+      "name": "The Wood of the Mushroom",
+      "description": "A thick wood where Alice, only three inches high, dodges an enormous puppy behind a great thistle. Near by grows a large mushroom about her own height, and on top of it sits a blue Caterpillar with its arms folded, quietly smoking a long hookah and taking not the smallest notice of her. One side of the mushroom makes her grow taller, and the other side shorter.",
+      "chapterRefs": [4, 5],
+      "environment": {
+        "setting": "outdoor-land",
+        "mood": "mysterious",
+        "scale": "intimate",
+        "era": "Victorian dream-world",
+        "timeOfDay": "day"
+      },
+      "characters": ["caterpillar"],
+      "interactions": [
+        {
+          "id": "mushroom-quote-two-sides",
+          "type": "quote",
+          "prompt": "Hear the Caterpillar's parting advice",
+          "quote": {
+            "text": "“One side will make you grow taller, and the other side will make you grow shorter.”",
+            "chapter": 5
+          },
+          "xp": 10
+        },
+        {
+          "id": "mushroom-quiz-pigeon",
+          "type": "quiz",
+          "prompt": "An angry pigeon",
+          "quiz": {
+            "question": "What does the Pigeon insist Alice must be, on account of her long neck?",
+            "options": [
+              "A serpent",
+              "A giraffe",
+              "A little girl",
+              "A caterpillar"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 5
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "id": "duchess-kitchen",
+      "name": "The Duchess's Kitchen",
+      "description": "The Duchess's large kitchen, full of smoke and far too much pepper, where the cook hurls fire-irons, saucepans, plates, and dishes while a Cheshire Cat grins from ear to ear on the hearth. The Duchess nurses a howling baby, sings it a violent lullaby, and flings it at Alice before going off to play croquet with the Queen.",
+      "chapterRefs": [6],
+      "environment": {
+        "setting": "indoor",
+        "mood": "tense",
+        "scale": "intimate",
+        "era": "Victorian dream-world",
+        "timeOfDay": "day"
+      },
+      "characters": ["duchess", "cheshire-cat"],
+      "interactions": [
+        {
+          "id": "kitchen-quote-pepper-soup",
+          "type": "quote",
+          "prompt": "Push open the door",
+          "quote": {
+            "text": "The door led right into a large kitchen, which was full of smoke from one end to the other: the Duchess was sitting on a three-legged stool in the middle, nursing a baby; the cook was leaning over the fire, stirring a large cauldron which seemed to be full of soup.",
+            "chapter": 6
+          },
+          "xp": 10
+        },
+        {
+          "id": "kitchen-quiz-baby",
+          "type": "quiz",
+          "prompt": "A queer-shaped little creature",
+          "quiz": {
+            "question": "What does the Duchess's baby turn into once Alice carries it outside?",
+            "options": [
+              "A pig",
+              "A fig",
+              "A star-fish",
+              "A puppy"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 6
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "id": "mad-tea-party",
+      "name": "The Mad Tea-Party",
+      "description": "A great table set out under a tree in front of the March Hare's house, whose chimneys are shaped like ears and whose roof is thatched with fur. The Hatter, the March Hare, and a sleeping Dormouse crowd together at one corner crying 'No room!' — for here it is always six o'clock, always tea-time, and the riddles have no answers.",
+      "chapterRefs": [7],
+      "environment": {
+        "setting": "outdoor-land",
+        "mood": "joyful",
+        "scale": "intimate",
+        "era": "Victorian garden party",
+        "timeOfDay": "dusk"
+      },
+      "characters": ["hatter", "march-hare"],
+      "interactions": [
+        {
+          "id": "tea-party-quote-no-room",
+          "type": "quote",
+          "prompt": "Approach the table",
+          "quote": {
+            "text": "The table was a large one, but the three were all crowded together at one corner of it: “No room! No room!” they cried out when they saw Alice coming.",
+            "chapter": 7
+          },
+          "xp": 10
+        },
+        {
+          "id": "tea-party-quiz-riddle",
+          "type": "quiz",
+          "prompt": "The Hatter's riddle",
+          "quiz": {
+            "question": "What is the Hatter's answer to his own riddle, 'Why is a raven like a writing-desk?'",
+            "options": [
+              "He hasn't the slightest idea",
+              "Because both have quills",
+              "Because Time stopped for both",
+              "Because both begin with tea"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 7
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "id": "queens-garden",
+      "name": "The Queen's Croquet-Ground",
+      "description": "The beautiful garden Alice glimpsed through the little door, with bright flower-beds, cool fountains, and a rose-tree whose white roses three trembling gardeners are hastily painting red. Here the Queen of Hearts holds her croquet-ground: live hedgehogs for balls, flamingoes for mallets, doubled-up soldiers for arches, and a sentence of beheading about once a minute.",
+      "chapterRefs": [8, 9],
+      "environment": {
+        "setting": "outdoor-land",
+        "mood": "grand",
+        "scale": "vast",
+        "era": "Victorian formal garden",
+        "timeOfDay": "day"
+      },
+      "characters": ["queen-of-hearts", "cheshire-cat", "duchess", "white-rabbit"],
+      "interactions": [
+        {
+          "id": "garden-quote-croquet-ground",
+          "type": "quote",
+          "prompt": "Survey the croquet-ground",
+          "quote": {
+            "text": "Alice thought she had never seen such a curious croquet-ground in her life; it was all ridges and furrows; the balls were live hedgehogs, the mallets live flamingoes, and the soldiers had to double themselves up and to stand on their hands and feet, to make the arches.",
+            "chapter": 8
+          },
+          "xp": 10
+        },
+        {
+          "id": "garden-quiz-roses",
+          "type": "quiz",
+          "prompt": "Wet paint on the rose-tree",
+          "quiz": {
+            "question": "Why are the three gardeners painting the white roses red?",
+            "options": [
+              "A red rose-tree ought to have been planted, and they put in a white one by mistake",
+              "The Queen has ordered every flower in the garden to be red",
+              "Red roses hide better among the hearts",
+              "The King is colour-blind and prefers painted flowers"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 8
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "id": "mock-turtle-shore",
+      "name": "The Mock Turtle's Shore",
+      "description": "A little ledge of rock by the sea where the Mock Turtle sits, sad and lonely, sighing as if his heart would break. With the Gryphon he remembers school in the sea — Reeling and Writhing, and the different branches of Arithmetic: Ambition, Distraction, Uglification, and Derision — and dances the Lobster Quadrille on the shingle.",
+      "chapterRefs": [9, 10],
+      "environment": {
+        "setting": "outdoor-water",
+        "mood": "desolate",
+        "scale": "medium",
+        "era": "Victorian seaside",
+        "timeOfDay": "day"
+      },
+      "characters": ["mock-turtle", "gryphon"],
+      "interactions": [
+        {
+          "id": "shore-quote-real-turtle",
+          "type": "quote",
+          "prompt": "Sit down and listen",
+          "quote": {
+            "text": "“Once,” said the Mock Turtle at last, with a deep sigh, “I was a real Turtle.”",
+            "chapter": 9
+          },
+          "xp": 10
+        },
+        {
+          "id": "shore-quiz-quadrille",
+          "type": "quiz",
+          "prompt": "The first figure of the dance",
+          "quiz": {
+            "question": "In the Lobster Quadrille, what do the dancers throw as far out to sea as they can?",
+            "options": [
+              "The lobsters",
+              "The jelly-fish",
+              "The whiting",
+              "Their partners' shoes"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 10
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "id": "courtroom",
+      "name": "The Court of Hearts",
+      "description": "The court where the Knave of Hearts stands trial in chains, with the King as judge in his crown-over-wig, twelve jurors scribbling on slates, and a large dish of tarts on a table in the very middle. The White Rabbit blows three blasts on a trumpet and reads the accusation, witnesses risk execution for being nervous, and the Queen wants the sentence before the verdict.",
+      "chapterRefs": [11, 12],
+      "environment": {
+        "setting": "indoor",
+        "mood": "tense",
+        "scale": "medium",
+        "era": "Victorian courtroom of playing cards",
+        "timeOfDay": "day"
+      },
+      "characters": ["queen-of-hearts", "white-rabbit", "hatter"],
+      "interactions": [
+        {
+          "id": "court-quote-accusation",
+          "type": "quote",
+          "prompt": "Hear the accusation read",
+          "quote": {
+            "text": "“The Queen of Hearts, she made some tarts,\n    All on a summer day:\nThe Knave of Hearts, he stole those tarts,\n    And took them quite away!”",
+            "chapter": 11
+          },
+          "xp": 10
+        },
+        {
+          "id": "court-quiz-sentence-first",
+          "type": "quiz",
+          "prompt": "The Queen's idea of justice",
+          "quiz": {
+            "question": "According to the Queen, what should come first at the trial?",
+            "options": [
+              "The sentence",
+              "The verdict",
+              "The evidence",
+              "The refreshments"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 12
+          },
+          "xp": 10
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "white-rabbit",
+      "name": "The White Rabbit",
+      "role": "minor",
+      "description": "The nervous herald of Wonderland, first seen in a waistcoat with a pocket watch, muttering 'Oh dear! Oh dear! I shall be late!' He mistakes Alice for his housemaid Mary Ann, frets about the savage Duchess, and at the trial blows the trumpet and reads the accusation."
+    },
+    {
+      "id": "dodo",
+      "name": "The Dodo",
+      "role": "minor",
+      "description": "A solemn bird of the pool party who proposes a Caucus-race to get everybody dry — a race with no start, no finish, and prizes for all. He gravely presents Alice with her own thimble, begging her acceptance of the elegant gift."
+    },
+    {
+      "id": "caterpillar",
+      "name": "The Caterpillar",
+      "role": "minor",
+      "description": "A large blue caterpillar, exactly three inches high, who sits on top of the mushroom with arms folded, quietly smoking a long hookah. Languid, contemptuous, and contradictory — 'Who are you?' — but he leaves Alice the secret of the mushroom's two sides."
+    },
+    {
+      "id": "cheshire-cat",
+      "name": "The Cheshire Cat",
+      "role": "ally",
+      "description": "The grinning cat of the Duchess's kitchen, who appears and vanishes at will — sometimes leaving only the grin behind. It points Alice toward the Hatter and the March Hare ('we're all mad here') and turns up again as a floating head above the croquet-ground."
+    },
+    {
+      "id": "duchess",
+      "name": "The Duchess",
+      "role": "minor",
+      "description": "Ferociously ill-tempered in her peppery kitchen, and sweetness itself when Alice meets her again at the croquet-ground. She finds a moral in everything, digs her uncomfortably sharp chin into Alice's shoulder, and lives under sentence of execution for boxing the Queen's ears."
+    },
+    {
+      "id": "hatter",
+      "name": "The Hatter",
+      "role": "minor",
+      "description": "Host of the perpetual tea-party, stuck at six o'clock ever since he quarrelled with Time at the Queen's concert. He asks riddles with no answers, butters the works of his watch, and appears at the trial as a very poor speaker of a witness, teacup in hand."
+    },
+    {
+      "id": "march-hare",
+      "name": "The March Hare",
+      "role": "minor",
+      "description": "Mad as his month suggests: he offers Alice wine that does not exist, dips the Hatter's watch in his tea, and keeps house where the chimneys are shaped like ears and the roof is thatched with fur."
+    },
+    {
+      "id": "queen-of-hearts",
+      "name": "The Queen of Hearts",
+      "role": "antagonist",
+      "description": "A furious playing-card monarch with one way of settling all difficulties, great or small: 'Off with his head!' She rules the croquet-ground and the court, demanding the sentence before the verdict — though, as the Gryphon confides, they never executes nobody, you know."
+    },
+    {
+      "id": "gryphon",
+      "name": "The Gryphon",
+      "role": "minor",
+      "description": "A creature found lying fast asleep in the sun until the Queen orders it to take Alice to the Mock Turtle. It chuckles at the Queen's executions — 'It's all her fancy, that' — and hurries Alice off by the hand when the trial begins."
+    },
+    {
+      "id": "mock-turtle",
+      "name": "The Mock Turtle",
+      "role": "minor",
+      "description": "The mournful thing Mock Turtle Soup is made from, once a real Turtle. He sobs through the story of his school in the sea, dances the Lobster Quadrille with the Gryphon, and sings of beautiful Soup in a voice choked with sobs."
+    }
+  ],
+  "paths": [
+    {
+      "from": "riverbank",
+      "to": "hall-of-doors",
+      "narrative": "Burning with curiosity, Alice runs across the field after the White Rabbit, pops down the rabbit-hole under the hedge, and falls very slowly down a very deep well."
+    },
+    {
+      "from": "hall-of-doors",
+      "to": "pool-of-tears",
+      "narrative": "Nine feet high and shedding gallons of tears, Alice shrinks again, and her foot slips — splash! she is up to her chin in the pool of her own tears."
+    },
+    {
+      "from": "pool-of-tears",
+      "to": "rabbits-house",
+      "narrative": "The White Rabbit mistakes Alice for his housemaid Mary Ann and sends her running to his house to fetch a pair of gloves and a fan."
+    },
+    {
+      "from": "rabbits-house",
+      "to": "mushroom-wood",
+      "narrative": "Shrunk small enough to slip out of the door at last, Alice runs from the crowd of little animals and finds herself safe in a thick wood."
+    },
+    {
+      "from": "mushroom-wood",
+      "to": "duchess-kitchen",
+      "narrative": "Nibbling herself down to nine inches, Alice comes suddenly upon an open place with a little house in it about four feet high."
+    },
+    {
+      "from": "duchess-kitchen",
+      "to": "mad-tea-party",
+      "narrative": "'In that direction,' says the Cheshire Cat, waving a paw, 'lives a March Hare. Visit either you like: they're both mad.'"
+    },
+    {
+      "from": "mad-tea-party",
+      "to": "hall-of-doors",
+      "narrative": "One of the trees has a door leading right into it — and Alice finds herself once more in the long hall, close to the little glass table."
+    },
+    {
+      "from": "hall-of-doors",
+      "to": "queens-garden",
+      "narrative": "With the golden key in the lock and a bite of mushroom to bring her to a foot high, Alice walks down the little passage and out at last among the bright flower-beds and the cool fountains.",
+      "unlockedBy": "hall-quiz-golden-key"
+    },
+    {
+      "from": "queens-garden",
+      "to": "mock-turtle-shore",
+      "narrative": "'Up, lazy thing!' says the Queen to the sleeping Gryphon, 'and take this young lady to see the Mock Turtle, and to hear his history.'"
+    },
+    {
+      "from": "mock-turtle-shore",
+      "to": "courtroom",
+      "narrative": "'The trial's beginning!' Taking Alice by the hand, the Gryphon hurries off without waiting for the end of the song."
+    },
+    {
+      "from": "courtroom",
+      "to": "riverbank",
+      "narrative": "The whole pack rises up into the air and comes flying down upon her — and Alice wakes on the bank, her head in her sister's lap."
+    }
+  ]
+}
