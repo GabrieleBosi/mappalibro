@@ -1,0 +1,174 @@
+{
+  "specVersion": "1.0",
+  "book": {
+    "slug": "treasure-island",
+    "title": "Treasure Island",
+    "author": "Robert Louis Stevenson",
+    "language": "en",
+    "year": 1883,
+    "summary": "Young Jim Hawkins finds a treasure map among a dead buccaneer's belongings and sails for a distant island aboard the Hispaniola, only to discover that the ship's one-legged cook, Long John Silver, is leading a crew of mutinous pirates after the same gold."
+  },
+  "provenance": {
+    "sourceUrl": "https://www.gutenberg.org/ebooks/120",
+    "license": "Public domain (US, published 1883); text from Project Gutenberg eBook #120",
+    "retrievedAt": "2026-07-07"
+  },
+  "entryLocation": "admiral-benbow-inn",
+  "locations": [
+    {
+      "id": "admiral-benbow-inn",
+      "name": "The Admiral Benbow Inn",
+      "description": "The Hawkins family's lonely inn above Black Hill Cove, where the old buccaneer Billy Bones has taken his lodging and watches the sea road for a seafaring man with one leg. By night his sea-song rattles the parlour, and dread gathers with every knock at the door: first Black Dog, then the tap-tapping stick of the blind man Pew, bringing the black spot.",
+      "chapterRefs": [1, 2, 3, 4, 5],
+      "environment": {
+        "setting": "indoor",
+        "mood": "tense",
+        "scale": "intimate",
+        "era": "18th-century rural England",
+        "timeOfDay": "night"
+      },
+      "characters": ["billy-bones"],
+      "interactions": [
+        {
+          "id": "benbow-quote-sea-song",
+          "type": "quote",
+          "prompt": "Listen at the parlour door",
+          "quote": {
+            "text": "“Fifteen men on the dead man’s chest--\nYo-ho-ho, and a bottle of rum!”",
+            "chapter": 1
+          },
+          "xp": 10
+        },
+        {
+          "id": "benbow-quiz-one-legged-man",
+          "type": "quiz",
+          "prompt": "The captain's standing orders",
+          "quiz": {
+            "question": "Who does the captain pay Jim a monthly fourpenny piece to watch for?",
+            "options": [
+              "A seafaring man with one leg",
+              "A blind beggar with a stick",
+              "A sailor with a sabre cut",
+              "An officer of the King"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 1
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "id": "bristol-docks",
+      "name": "Bristol Docks",
+      "description": "The great port where the Hispaniola fits out for her voyage, crowded with ships of all sizes and rigs and nations. For Jim, who has never left the cove, it is pure delight: the smell of tar and salt, wonderful figureheads, and old sailors with rings in their ears and tarry pigtails. Somewhere along the quay hangs the sign of the Spy-glass, the tavern kept by the one-legged cook Long John Silver.",
+      "chapterRefs": [7, 8],
+      "environment": {
+        "setting": "outdoor-land",
+        "mood": "joyful",
+        "scale": "medium",
+        "era": "18th-century English port city",
+        "timeOfDay": "day"
+      },
+      "characters": ["long-john-silver"],
+      "interactions": [
+        {
+          "id": "docks-quote-tar-and-salt",
+          "type": "quote",
+          "prompt": "Take in the harbour",
+          "quote": {
+            "text": "Though I had lived by the shore all my life, I seemed never to have been near the sea till then. The smell of tar and salt was something new.",
+            "chapter": 7
+          },
+          "xp": 10
+        },
+        {
+          "id": "docks-quiz-spy-glass",
+          "type": "quiz",
+          "prompt": "Find the tavern sign",
+          "quiz": {
+            "question": "What is the name of Long John Silver's tavern in Bristol?",
+            "options": [
+              "The Spy-glass",
+              "The Admiral Benbow",
+              "The Royal George",
+              "The Jolly Roger"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 8
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "id": "the-hispaniola",
+      "name": "The Hispaniola",
+      "description": "Squire Trelawney's schooner, outward bound for the island with the treasure map locked in the captain's cabin and a crew Silver picked himself. By night the deck seems easy enough — the cook's parrot screaming 'Pieces of eight!', an open barrel of apples amidships — but inside that barrel Jim lies trembling, listening to Silver talk mutiny inches away.",
+      "chapterRefs": [9, 10, 11, 12],
+      "environment": {
+        "setting": "vehicle",
+        "mood": "tense",
+        "scale": "medium",
+        "era": "18th-century sailing schooner",
+        "timeOfDay": "night"
+      },
+      "characters": ["long-john-silver"],
+      "interactions": [
+        {
+          "id": "ship-quote-apple-barrel",
+          "type": "quote",
+          "prompt": "Climb into the apple barrel",
+          "quote": {
+            "text": "It was Silver’s voice, and before I had heard a dozen words, I would not have shown myself for all the world, but lay there, trembling and listening, in the extreme of fear and curiosity, for from these dozen words I understood that the lives of all the honest men aboard depended upon me alone.",
+            "chapter": 11
+          },
+          "xp": 10
+        },
+        {
+          "id": "ship-quiz-apple-barrel",
+          "type": "quiz",
+          "prompt": "The overheard plot",
+          "quiz": {
+            "question": "Where is Jim hiding when he overhears Silver plotting mutiny?",
+            "options": [
+              "Inside the apple barrel",
+              "In the ship's galley",
+              "Under the jolly-boat",
+              "In the powder magazine"
+            ],
+            "answerIndex": 0,
+            "chapterRef": 11
+          },
+          "xp": 10
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "billy-bones",
+      "name": "Billy Bones",
+      "role": "minor",
+      "description": "The brown old seaman with the sabre cut who lodges at the Admiral Benbow — 'the captain'. He pays Jim to watch for a one-legged sailor, and the map of Treasure Island lies at the bottom of his sea-chest."
+    },
+    {
+      "id": "long-john-silver",
+      "name": "Long John Silver",
+      "role": "antagonist",
+      "description": "The one-legged landlord of the Spy-glass and the Hispaniola's sea cook, managing his crutch with wonderful dexterity, hopping about upon it like a bird. Cheerful, intelligent, and secretly the ringleader of the mutineers."
+    }
+  ],
+  "paths": [
+    {
+      "from": "admiral-benbow-inn",
+      "to": "bristol-docks",
+      "narrative": "Jim says goodbye to his mother and the cove and rides the mail coach through the night to Bristol."
+    },
+    {
+      "from": "bristol-docks",
+      "to": "the-hispaniola",
+      "narrative": "A boat carries the last of the crew out to where the Hispaniola lies at anchor, ready for sea."
+    }
+  ]
+}
