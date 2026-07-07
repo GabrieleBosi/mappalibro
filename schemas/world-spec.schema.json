@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mappalibro.app/schemas/world-spec.schema.json",
+  "title": "Mappalibro World Spec",
+  "type": "object",
+  "required": ["specVersion", "book", "provenance", "entryLocation", "locations", "paths"],
+  "additionalProperties": false,
+  "properties": {
+    "specVersion": { "const": "1.0" },
+    "book": {
+      "type": "object",
+      "required": ["slug", "title", "author", "language", "year"],
+      "additionalProperties": false,
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "title": { "type": "string" },
+        "author": { "type": "string" },
+        "language": { "type": "string", "minLength": 2, "maxLength": 5 },
+        "year": { "type": "integer" },
+        "summary": { "type": "string", "maxLength": 500 }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["sourceUrl", "license"],
+      "additionalProperties": false,
+      "properties": {
+        "sourceUrl": { "type": "string", "format": "uri" },
+        "license": { "type": "string", "description": "e.g. 'Public domain (US, pre-1930)'" },
+        "retrievedAt": { "type": "string", "format": "date" }
+      }
+    },
+    "entryLocation": { "type": "string" },
+    "locations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "description", "chapterRefs", "environment"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "name": { "type": "string" },
+          "description": {
+            "type": "string",
+            "description": "2-4 sentences, grounded in the text, shown on arrival"
+          },
+          "chapterRefs": {
+            "type": "array",
+            "items": { "type": "integer", "minimum": 1 },
+            "minItems": 1
+          },
+          "environment": {
+            "type": "object",
+            "required": ["setting", "mood", "scale"],
+            "additionalProperties": false,
+            "properties": {
+              "setting": {
+                "enum": ["indoor", "outdoor-land", "outdoor-water", "underground", "vehicle"]
+              },
+              "mood": {
+                "enum": ["serene", "tense", "mysterious", "joyful", "desolate", "grand"]
+              },
+              "scale": { "enum": ["intimate", "medium", "vast"] },
+              "era": { "type": "string", "description": "free-text, drives palette/props" },
+              "timeOfDay": { "enum": ["dawn", "day", "dusk", "night"] }
+            }
+          },
+          "characters": {
+            "type": "array",
+            "items": { "type": "string", "description": "character id present here" }
+          },
+          "interactions": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/interaction" }
+          }
+        }
+      }
+    },
+    "characters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "role", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "name": { "type": "string" },
+          "role": { "enum": ["protagonist", "antagonist", "ally", "minor", "narrator"] },
+          "description": { "type": "string", "maxLength": 400 }
+        }
+      }
+    },
+    "paths": {
+      "type": "array",
+      "description": "Undirected edges of the location graph. Every location must be reachable from entryLocation.",
+      "items": {
+        "type": "object",
+        "required": ["from", "to"],
+        "additionalProperties": false,
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "narrative": { "type": "string", "description": "optional transition text" },
+          "unlockedBy": { "type": "string", "description": "interaction id gating this path" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "interaction": {
+      "type": "object",
+      "required": ["id", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "type": { "enum": ["quote", "quiz", "object", "dialogue"] },
+        "prompt": { "type": "string" },
+        "quote": {
+          "type": "object",
+          "required": ["text", "chapter"],
+          "properties": {
+            "text": { "type": "string", "description": "verbatim from source.txt only" },
+            "chapter": { "type": "integer" }
+          }
+        },
+        "quiz": {
+          "type": "object",
+          "required": ["question", "options", "answerIndex"],
+          "properties": {
+            "question": { "type": "string" },
+            "options": { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 4 },
+            "answerIndex": { "type": "integer", "minimum": 0 },
+            "chapterRef": { "type": "integer" }
+          }
+        },
+        "xp": { "type": "integer", "minimum": 0, "default": 10 }
+      }
+    }
+  }
+}

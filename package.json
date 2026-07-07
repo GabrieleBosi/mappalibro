@@ -1,0 +1,24 @@
+{
+  "name": "mappalibro",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Explorable 3D worlds generated from public-domain books",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @mappalibro/engine",
+    "build": "npm run build --workspace @mappalibro/engine",
+    "test": "npm run test --workspace @mappalibro/engine",
+    "validate": "node scripts/validate.mjs",
+    "ingest": "node scripts/ingest.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
